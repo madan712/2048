@@ -1,6 +1,7 @@
-node_modules/
-.expo/
-dist/
+node_modules/**/*
+yarn.lock
+.expo/*
+.expo-shared/*
 npm-debug.*
 *.jks
 *.p8
@@ -12,3 +13,14 @@ web-build/
 
 # macOS
 .DS_Store
+build/
+/target/
+
+.project
+.classpath
+.settings
+.expo-shared
+*.lock
+yarn-error.log
+
+eas.json
