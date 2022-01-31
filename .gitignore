@@ -24,3 +24,5 @@ build/
 yarn-error.log
 
 eas.json
+yarn.lock
+pom.xml
