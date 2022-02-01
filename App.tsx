@@ -1,31 +1,88 @@
-import { StatusBar } from 'expo-status-bar';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import _ from 'lodash';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import React from 'react'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import GestureRecognizer from 'react-native-swipe-gestures'
+import _ from 'lodash'
 
 export default function App() {
 
-	const size = 4;
+	const size = 4
+	//const min = 0
+	//const max = size - 1
 
-	var height = Dimensions.get('window').height;
-	var width = Dimensions.get('window').width;
+	const getBlankData = () => {
+		let grid = new Array(size)
+		_.times(size, (i) => {
+			grid[i] = new Array(size)
+		})
+		return grid
+	}
+
+	const [gridData, setGridData] = React.useState(getBlankData())
+
+	React.useEffect(() => {
+		console.log('Loading initial data')
+		let c1 = getRandomCell()
+		let c2 = null
+		while (true) {
+			c2 = getRandomCell()
+			if (!_.isEqual(c1, c2))
+				break
+		}
+		console.log(c1)
+		console.log(c2)
+
+		let gridData = getBlankData()
+		gridData[c1.x][c1.y] = 2
+		gridData[c2.x][c2.y] = 2
+		setGridData(gridData)
+
+	}, [])
+
+
+	const getColor = (num) => {
+		let color = "#ffffff"
+		switch (num) {
+			case 2: color = "#F6CED8"; break;
+			case 4: color = "#F7BE81"; break;
+			case 8: color = "#F3F781"; break;
+			case 16: color = "#BEF781"; break;
+			case 32: color = "#81F7D8"; break;
+			case 64: color = "#58D3F7"; break;
+			case 128: color = "#FA58F4"; break;
+			case 256: color = "#A901DB"; break;
+			case 512: color = "#01DF3A"; break;
+			case 1024: color = "#D7DF01"; break;
+			case 2048: color = "#D7DF01"; break;
+			default: color = "#ffffff";
+		}
+		return color
+	}
+
+	const getRandomCell = () => {
+		var x = _.random(0, size - 1)
+		var y = _.random(0, size - 1)
+		return { 'x': x, 'y': y }
+	}
+
+
+	//var height = Dimensions.get('window').height
+	//var width = Dimensions.get('window').width
 
 	const onSwipeUp = (state) => {
-		console.log('onSwipeUp');
+		console.log('onSwipeUp')
 	}
 
 	const onSwipeDown = (state) => {
-		console.log('onSwipeDown');
+		console.log('onSwipeDown')
 	}
 
 	const onSwipeLeft = (state) => {
-		console.log('onSwipeLeft');
+		console.log('onSwipeLeft')
 	}
 
 	const onSwipeRight = (state) => {
-		console.log('onSwipeRight');
+		console.log('onSwipeRight')
 	}
-
 
 	return (
 		<GestureRecognizer style={styles.container}
@@ -44,7 +101,7 @@ export default function App() {
 								return <View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
 									{
 										_.times(size, (c) => {
-											return <View style={{ margin: 2, width: 80, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + c} ><Text style={{ fontSize: 20 }}></Text></View>
+											return <View style={{ margin: 2, width: 80, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
 
 										})
 									}
@@ -57,9 +114,8 @@ export default function App() {
 				</View>
 			</View>
 
-
 		</GestureRecognizer>
-	);
+	)
 }
 
 const styles = StyleSheet.create({
@@ -69,4 +125,4 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-});
+})
