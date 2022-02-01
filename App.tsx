@@ -35,27 +35,26 @@ export default function App() {
 			onSwipeRight={(state) => onSwipeRight(state)}
 		>
 
-			<View style={{ backgroundColor: '#BDBDBD', flex: 1, width: '100%',  justifyContent: 'center' }}>
+			<View style={{ flex: 1, justifyContent: 'center' }}>
 
-				<View style={{   flexDirection: 'column' }}>
-					{
-						_.times(size, (r) => {
-							return <View key={r} style={{ flexDirection: 'row', justifyContent: 'center'}}>
-								{
-									_.times(size, (c) => {
+				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
+					<View style={{ flexDirection: 'column' }}>
+						{
+							_.times(size, (r) => {
+								return <View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
+									{
+										_.times(size, (c) => {
+											return <View style={{ margin: 2, width: 80, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + c} ><Text style={{ fontSize: 20 }}></Text></View>
 
+										})
+									}
+								</View>
+							})
+						}
 
-										return <View style={{ margin: 2, padding: 20, backgroundColor: '#FFFFFF', borderWidth: 1 }} key={r + c} ><Text style={{fontSize: 20, fontWeight: "bold"}}>10</Text></View>
-
-
-									})
-								}
-							</View>
-						})
-					}
+					</View>
 
 				</View>
-
 			</View>
 
 
@@ -66,7 +65,7 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#fff',
+		backgroundColor: '#F5ECCE',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
