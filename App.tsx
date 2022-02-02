@@ -6,8 +6,8 @@ import _ from 'lodash'
 export default function App() {
 
 	const size = 4
-	//const min = 0
-	//const max = size - 1
+	const min = 0
+	const max = size - 1
 
 	const getBlankData = () => {
 		let grid = new Array(size)
@@ -37,6 +37,7 @@ export default function App() {
 		setGridData(gridData)
 
 	}, [])
+
 
 
 	const getColor = (num) => {
@@ -78,10 +79,101 @@ export default function App() {
 
 	const onSwipeLeft = (state) => {
 		console.log('onSwipeLeft')
+		console.log(gridData)
+		_.times(size, (r) => {
+			_.times(size, (c) => {
+				if (gridData[r][c]) {
+					moveLeft(r, c);
+				}
+			})
+		})
+		setGridData(_.assign([], gridData))
+		console.log(gridData)
+	}
+	
+	
+
+	const moveLeft = (r, c) => {
+		console.log('----> ' + r + ' ' + c)
+		if (c != min) {
+
+			_.eachRight(_.times(c), i => {
+				console.log(r + ' ' + i)
+				console.log('-----------1')
+				if (gridData[r][i]) {
+					console.log('-----------2')
+
+					if (gridData[r][i] === gridData[r][i + 1]) {
+						console.log('-----------3')
+
+						gridData[r][i] = gridData[r][i + 1] * 2
+						gridData[r][i + 1] = undefined
+
+					}
+					console.log('-----------4')
+
+				} else {
+					console.log('-----------5')
+					gridData[r][i] = gridData[r][i + 1]
+					gridData[r][i + 1] = undefined
+
+				}
+				console.log('-----------6')
+
+			})
+			console.log('-----------7')
+
+		}
+		console.log('-----------8')
 	}
 
 	const onSwipeRight = (state) => {
 		console.log('onSwipeRight')
+		console.log(gridData)
+		_.times(size, (r) => {
+
+			_.eachRight(_.times(size), c => {
+				if (gridData[r][c]) {
+					moveRight(r, c);
+				}
+			})
+		})
+		setGridData(_.assign([], gridData))
+		console.log(gridData)
+	}
+
+	const moveRight = (r, c) => {
+		console.log('----> ' + r + ' ' + c)
+		if (c != max) {
+
+			_.times(max + 1, i => {
+				console.log(r + ' ' + i)
+				console.log('-----------1')
+				if (gridData[r][i]) {
+					console.log('-----------2')
+
+					if (gridData[r][i] === gridData[r][i - 1]) {
+						console.log('-----------3')
+
+						gridData[r][i] = gridData[r][i - 1] * 2
+						gridData[r][i - 1] = undefined
+
+					}
+					console.log('-----------4')
+
+				} else {
+					console.log('-----------5')
+					gridData[r][i] = gridData[r][i - 1]
+					gridData[r][i - 1] = undefined
+
+				}
+				console.log('-----------6')
+
+			})
+			console.log('-----------7')
+
+		}
+		console.log('-----------8')
 	}
 
 	return (
@@ -101,7 +193,7 @@ export default function App() {
 								return <View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
 									{
 										_.times(size, (c) => {
-											return <View style={{ margin: 2, width: 80, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
+											return <View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
 
 										})
 									}
@@ -113,7 +205,6 @@ export default function App() {
 
 				</View>
 			</View>
-
 		</GestureRecognizer>
 	)
 }
