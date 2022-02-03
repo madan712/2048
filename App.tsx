@@ -4,7 +4,6 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 import _ from 'lodash'
 
 export default function App() {
-
 	const size = 4
 	const min = 0
 	const max = size - 1
@@ -31,8 +30,6 @@ export default function App() {
 		setGridData(gridData)
 
 	}, [])
-
-
 
 	const getColor = (num) => {
 		let color = "#ffffff"
@@ -98,7 +95,6 @@ export default function App() {
 		update()
 	}
 
-
 	const moveDown = (r, c) => {
 		if (r != max) {
 			_.range(r + 1, size).map(i => {
@@ -125,8 +121,6 @@ export default function App() {
 		setGridData(_.assign([], gridData))
 		update()
 	}
-
-
 
 	const moveLeft = (r, c) => {
 		if (c != min) {
@@ -192,9 +186,7 @@ export default function App() {
 			onSwipeLeft={(state) => onSwipeLeft(state)}
 			onSwipeRight={(state) => onSwipeRight(state)}
 		>
-
 			<View style={{ flex: 1, justifyContent: 'center' }}>
-
 				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
 					<View style={{ flexDirection: 'column' }}>
 						{
