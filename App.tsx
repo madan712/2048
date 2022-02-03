@@ -11,16 +11,13 @@ export default function App() {
 
 	const getBlankData = () => {
 		let grid = new Array(size)
-		_.times(size, (i) => {
-			grid[i] = new Array(size)
-		})
+		_.range(size).map(i => grid[i] = new Array(size))
 		return grid
 	}
 
 	const [gridData, setGridData] = React.useState(getBlankData())
 
 	React.useEffect(() => {
-		console.log('Loading initial data')
 		let c1 = getRandomCell()
 		let c2 = null
 		while (true) {
@@ -28,9 +25,6 @@ export default function App() {
 			if (!_.isEqual(c1, c2))
 				break
 		}
-		console.log(c1)
-		console.log(c2)
-
 		let gridData = getBlankData()
 		gridData[c1.x][c1.y] = 2
 		gridData[c2.x][c2.y] = 2
@@ -65,115 +59,130 @@ export default function App() {
 		return { 'x': x, 'y': y }
 	}
 
-
-	//var height = Dimensions.get('window').height
-	//var width = Dimensions.get('window').width
-
 	const onSwipeUp = (state) => {
-		console.log('onSwipeUp')
+		_.range(size).map(c => _.range(size).map(r => {
+			if (gridData[r][c]) {
+				moveUp(r, c);
+			}
+
+		}))
+		setGridData(_.assign([], gridData))
+		update()
+	}
+
+	const moveUp = (r, c) => {
+		if (r != min) {
+			_.rangeRight(r).map(i => {
+				if (gridData[i][c]) {
+					if (gridData[i][c] === gridData[i + 1][c]) {
+						gridData[i][c] = gridData[i + 1][c] * 2
+						gridData[i + 1][c] = undefined
+					}
+				} else {
+					gridData[i][c] = gridData[i + 1][c]
+					gridData[i + 1][c] = undefined
+
+				}
+			})
+		}
 	}
 
 	const onSwipeDown = (state) => {
-		console.log('onSwipeDown')
+		_.range(size).map(c => _.rangeRight(size).map(r => {
+			if (gridData[r][c]) {
+				moveDown(r, c);
+			}
+
+		}))
+		setGridData(_.assign([], gridData))
+		update()
+	}
+
+
+	const moveDown = (r, c) => {
+		if (r != max) {
+			_.range(r + 1, size).map(i => {
+				if (gridData[i][c]) {
+					if (gridData[i][c] === gridData[i - 1][c]) {
+						gridData[i][c] = gridData[i - 1][c] * 2
+						gridData[i - 1][c] = undefined
+					}
+				} else {
+					gridData[i][c] = gridData[i - 1][c]
+					gridData[i - 1][c] = undefined
+
+				}
+			})
+		}
 	}
 
 	const onSwipeLeft = (state) => {
-		console.log('onSwipeLeft')
-		console.log(gridData)
-		_.times(size, (r) => {
-			_.times(size, (c) => {
-				if (gridData[r][c]) {
-					moveLeft(r, c);
-				}
-			})
-		})
+		_.range(size).map(r => _.range(size).map(c => {
+			if (gridData[r][c]) {
+				moveLeft(r, c);
+			}
+		}))
 		setGridData(_.assign([], gridData))
-		console.log(gridData)
+		update()
 	}
-	
-	
+
+
 
 	const moveLeft = (r, c) => {
-		console.log('----> ' + r + ' ' + c)
 		if (c != min) {
-
-			_.eachRight(_.times(c), i => {
-				console.log(r + ' ' + i)
-				console.log('-----------1')
+			_.rangeRight(c).map(i => {
 				if (gridData[r][i]) {
-					console.log('-----------2')
-
 					if (gridData[r][i] === gridData[r][i + 1]) {
-						console.log('-----------3')
-
 						gridData[r][i] = gridData[r][i + 1] * 2
 						gridData[r][i + 1] = undefined
-
 					}
-					console.log('-----------4')
 
 				} else {
-					console.log('-----------5')
 					gridData[r][i] = gridData[r][i + 1]
 					gridData[r][i + 1] = undefined
 
 				}
-				console.log('-----------6')
-
 			})
-			console.log('-----------7')
-
 		}
-		console.log('-----------8')
 	}
 
 	const onSwipeRight = (state) => {
-		console.log('onSwipeRight')
-		console.log(gridData)
-		_.times(size, (r) => {
+		_.range(size).map(r => _.rangeRight(size).map(c => {
+			if (gridData[r][c]) {
+				moveRight(r, c);
+			}
 
-			_.eachRight(_.times(size), c => {
-				if (gridData[r][c]) {
-					moveRight(r, c);
-				}
-			})
-		})
+		}))
 		setGridData(_.assign([], gridData))
-		console.log(gridData)
+		update()
 	}
 
 	const moveRight = (r, c) => {
-		console.log('----> ' + r + ' ' + c)
 		if (c != max) {
-
-			_.times(max + 1, i => {
-				console.log(r + ' ' + i)
-				console.log('-----------1')
+			_.range(c + 1, size).map(i => {
 				if (gridData[r][i]) {
-					console.log('-----------2')
-
 					if (gridData[r][i] === gridData[r][i - 1]) {
-						console.log('-----------3')
-
 						gridData[r][i] = gridData[r][i - 1] * 2
 						gridData[r][i - 1] = undefined
-
 					}
-					console.log('-----------4')
-
 				} else {
-					console.log('-----------5')
 					gridData[r][i] = gridData[r][i - 1]
 					gridData[r][i - 1] = undefined
-
 				}
-				console.log('-----------6')
-
 			})
-			console.log('-----------7')
-
 		}
-		console.log('-----------8')
+	}
+
+	const update = () => {
+		let emptyCells = []
+		_.range(size).map(r => _.range(size).map(c => {
+			if (!gridData[r][c]) {
+				emptyCells.push({ 'x': r, 'y': c })
+			}
+		}))
+		const emptyCell = _.sample(emptyCells)
+		gridData[emptyCell.x][emptyCell.y] = 2
+		setGridData(_.assign([], gridData))
 	}
 
 	return (
@@ -189,20 +198,17 @@ export default function App() {
 				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
 					<View style={{ flexDirection: 'column' }}>
 						{
-							_.times(size, (r) => {
-								return <View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
+							_.range(size).map(r =>
+								<View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
 									{
-										_.times(size, (c) => {
-											return <View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
-
-										})
+										_.range(size).map(c =>
+											<View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
+										)
 									}
 								</View>
-							})
+							)
 						}
-
 					</View>
-
 				</View>
 			</View>
 		</GestureRecognizer>
