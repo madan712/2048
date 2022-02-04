@@ -7,6 +7,8 @@ export default function App() {
 	const size = 4
 	const min = 0
 	const max = size - 1
+	let merged = []
+	let isMoved = false
 
 	const getBlankData = () => {
 		let grid = new Array(size)
@@ -32,20 +34,20 @@ export default function App() {
 	}, [])
 
 	const getColor = (num) => {
-		let color = "#ffffff"
+		let color = '#ffffff'
 		switch (num) {
-			case 2: color = "#F6CED8"; break;
-			case 4: color = "#F7BE81"; break;
-			case 8: color = "#F3F781"; break;
-			case 16: color = "#BEF781"; break;
-			case 32: color = "#81F7D8"; break;
-			case 64: color = "#58D3F7"; break;
-			case 128: color = "#FA58F4"; break;
-			case 256: color = "#A901DB"; break;
-			case 512: color = "#01DF3A"; break;
-			case 1024: color = "#D7DF01"; break;
-			case 2048: color = "#D7DF01"; break;
-			default: color = "#ffffff";
+			case 2: color = '#F6CECE'; break;
+			case 4: color = '#F5D0A9'; break;
+			case 8: color = '#F5ECCE'; break;
+			case 16: color = '#D4E6F1'; break;
+			case 32: color = '#D0F5A9'; break;
+			case 64: color = '#A9F5A9'; break;
+			case 128: color = '#A9F5D0'; break;
+			case 256: color = '#A9D0F5'; break;
+			case 512: color = '#F6CEF5'; break;
+			case 1024: color = '#CECEF6'; break;
+			case 2048: color = '#CEF6F5'; break;
+			default: color = '#ffffff';
 		}
 		return color
 	}
@@ -57,6 +59,8 @@ export default function App() {
 	}
 
 	const onSwipeUp = (state) => {
+		isMoved = false
+		merged = []
 		_.range(size).map(c => _.range(size).map(r => {
 			if (gridData[r][c]) {
 				moveUp(r, c);
@@ -64,27 +68,35 @@ export default function App() {
 
 		}))
 		setGridData(_.assign([], gridData))
-		update()
+		if (isMoved) update()
 	}
 
 	const moveUp = (r, c) => {
 		if (r != min) {
-			_.rangeRight(r).map(i => {
+			_.each(_.rangeRight(r), i => {
 				if (gridData[i][c]) {
 					if (gridData[i][c] === gridData[i + 1][c]) {
-						gridData[i][c] = gridData[i + 1][c] * 2
-						gridData[i + 1][c] = undefined
+						const cell = { 'x': i, 'y': c }
+						if (!_.some(merged, cell)) {
+							merged.push(cell)
+							gridData[i][c] = gridData[i + 1][c] * 2
+							gridData[i + 1][c] = undefined
+							isMoved = true
+						}
+						return false
 					}
 				} else {
 					gridData[i][c] = gridData[i + 1][c]
 					gridData[i + 1][c] = undefined
-
+					isMoved = true
 				}
 			})
 		}
 	}
 
 	const onSwipeDown = (state) => {
+		isMoved = false
+		merged = []
 		_.range(size).map(c => _.rangeRight(size).map(r => {
 			if (gridData[r][c]) {
 				moveDown(r, c);
@@ -92,55 +104,71 @@ export default function App() {
 
 		}))
 		setGridData(_.assign([], gridData))
-		update()
+		if (isMoved) update()
 	}
 
 	const moveDown = (r, c) => {
 		if (r != max) {
-			_.range(r + 1, size).map(i => {
+			_.each(_.range(r + 1, size), i => {
 				if (gridData[i][c]) {
 					if (gridData[i][c] === gridData[i - 1][c]) {
-						gridData[i][c] = gridData[i - 1][c] * 2
-						gridData[i - 1][c] = undefined
+						const cell = { 'x': i, 'y': c }
+						if (!_.some(merged, cell)) {
+							merged.push(cell)
+							gridData[i][c] = gridData[i - 1][c] * 2
+							gridData[i - 1][c] = undefined
+							isMoved = true
+						}
+						return false
 					}
 				} else {
 					gridData[i][c] = gridData[i - 1][c]
 					gridData[i - 1][c] = undefined
-
+					isMoved = true
 				}
 			})
 		}
 	}
 
 	const onSwipeLeft = (state) => {
+		//console.log('onSwipeLeft')
+		isMoved = false
+		merged = []
 		_.range(size).map(r => _.range(size).map(c => {
 			if (gridData[r][c]) {
 				moveLeft(r, c);
 			}
 		}))
 		setGridData(_.assign([], gridData))
-		update()
+		if (isMoved) update()
 	}
 
 	const moveLeft = (r, c) => {
 		if (c != min) {
-			_.rangeRight(c).map(i => {
+			_.each(_.rangeRight(c), i => {
 				if (gridData[r][i]) {
 					if (gridData[r][i] === gridData[r][i + 1]) {
-						gridData[r][i] = gridData[r][i + 1] * 2
-						gridData[r][i + 1] = undefined
+						const cell = { 'x': r, 'y': i }
+						if (!_.some(merged, cell)) {
+							merged.push(cell)
+							gridData[r][i] = gridData[r][i + 1] * 2
+							gridData[r][i + 1] = undefined
+							isMoved = true
+						}
+						return false
 					}
-
 				} else {
 					gridData[r][i] = gridData[r][i + 1]
 					gridData[r][i + 1] = undefined
-
+					isMoved = true
 				}
 			})
 		}
 	}
 
 	const onSwipeRight = (state) => {
+		isMoved = false
+		merged = []
 		_.range(size).map(r => _.rangeRight(size).map(c => {
 			if (gridData[r][c]) {
 				moveRight(r, c);
@@ -148,20 +176,27 @@ export default function App() {
 
 		}))
 		setGridData(_.assign([], gridData))
-		update()
+		if (isMoved) update()
 	}
 
 	const moveRight = (r, c) => {
 		if (c != max) {
-			_.range(c + 1, size).map(i => {
+			_.each(_.range(c + 1, size), i => {
 				if (gridData[r][i]) {
 					if (gridData[r][i] === gridData[r][i - 1]) {
-						gridData[r][i] = gridData[r][i - 1] * 2
-						gridData[r][i - 1] = undefined
+						const cell = { 'x': r, 'y': i }
+						if (!_.some(merged, cell)) {
+							merged.push(cell)
+							gridData[r][i] = gridData[r][i - 1] * 2
+							gridData[r][i - 1] = undefined
+							isMoved = true
+						}
+						return false
 					}
 				} else {
 					gridData[r][i] = gridData[r][i - 1]
 					gridData[r][i - 1] = undefined
+					isMoved = true
 				}
 			})
 		}
