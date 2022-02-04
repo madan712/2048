@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Animated, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import _ from 'lodash'
 
@@ -65,7 +65,6 @@ export default function App() {
 			if (gridData[r][c]) {
 				moveUp(r, c);
 			}
-
 		}))
 		setGridData(_.assign([], gridData))
 		if (isMoved) update()
@@ -83,8 +82,8 @@ export default function App() {
 							gridData[i + 1][c] = undefined
 							isMoved = true
 						}
-						return false
 					}
+					return false
 				} else {
 					gridData[i][c] = gridData[i + 1][c]
 					gridData[i + 1][c] = undefined
@@ -101,7 +100,6 @@ export default function App() {
 			if (gridData[r][c]) {
 				moveDown(r, c);
 			}
-
 		}))
 		setGridData(_.assign([], gridData))
 		if (isMoved) update()
@@ -119,8 +117,8 @@ export default function App() {
 							gridData[i - 1][c] = undefined
 							isMoved = true
 						}
-						return false
 					}
+					return false
 				} else {
 					gridData[i][c] = gridData[i - 1][c]
 					gridData[i - 1][c] = undefined
@@ -131,7 +129,6 @@ export default function App() {
 	}
 
 	const onSwipeLeft = (state) => {
-		//console.log('onSwipeLeft')
 		isMoved = false
 		merged = []
 		_.range(size).map(r => _.range(size).map(c => {
@@ -155,8 +152,8 @@ export default function App() {
 							gridData[r][i + 1] = undefined
 							isMoved = true
 						}
-						return false
 					}
+					return false
 				} else {
 					gridData[r][i] = gridData[r][i + 1]
 					gridData[r][i + 1] = undefined
@@ -173,7 +170,6 @@ export default function App() {
 			if (gridData[r][c]) {
 				moveRight(r, c);
 			}
-
 		}))
 		setGridData(_.assign([], gridData))
 		if (isMoved) update()
@@ -191,8 +187,8 @@ export default function App() {
 							gridData[r][i - 1] = undefined
 							isMoved = true
 						}
-						return false
 					}
+					return false
 				} else {
 					gridData[r][i] = gridData[r][i - 1]
 					gridData[r][i - 1] = undefined
@@ -229,7 +225,7 @@ export default function App() {
 								<View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
 									{
 										_.range(size).map(c =>
-											<View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
+											<Animated.View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></Animated.View>
 										)
 									}
 								</View>
