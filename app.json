@@ -21,7 +21,7 @@
 		],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.javaxp.2048",
+			"bundleIdentifier": "com.javaxp.adfree2048",
 			"buildNumber": "1.0.0"
 		},
 		"android": {
@@ -29,9 +29,9 @@
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#F5ECCE"
 			},
-			"package": "com.javaxp.todo",
+			"package": "com.javaxp.adfree2048",
 			"versionCode": 5,
-			"playStoreUrl": ""
+			"playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.adfree2048"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
