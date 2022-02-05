@@ -1,40 +1,40 @@
 {
-	"expo": {
-		"name": "2048",
-		"slug": "2048",
-		"version": "1.0.0",
-		"description": "2048 game demonstrating react-native-gesture-handler",
-		"orientation": "portrait",
-		"githubUrl": "https://github.com/madan712/2048",
-		"privacy": "public",
-		"icon": "./assets/icon.png",
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#F5ECCE"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": [
-			"**/*"
-		],
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "com.javaxp.adfree2048",
-			"buildNumber": "1.0.0"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#F5ECCE"
-			},
-			"package": "com.javaxp.adfree2048",
-			"versionCode": 5,
-			"playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.adfree2048"
-		},
-		"web": {
-			"favicon": "./assets/favicon.png"
-		}
-	}
+  "expo": {
+    "name": "2048",
+    "slug": "2048",
+    "version": "1.0.0",
+    "description": "2048 game demonstrating react-native-gesture-handler",
+    "orientation": "portrait",
+    "githubUrl": "https://github.com/madan712/2048",
+    "privacy": "public",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5ECCE"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.javaxp.simple2048",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5ECCE"
+      },
+      "package": "com.javaxp.adfree2048",
+      "versionCode": 5,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.simple2048"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
 }
