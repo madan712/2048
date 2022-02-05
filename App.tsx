@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Animated, Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import _ from 'lodash'
@@ -327,19 +327,19 @@ export default function App() {
 					</View>
 				</View>
 				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
-					<Animated.View style={{ flexDirection: 'column' }}>
+					<View style={{ flexDirection: 'column' }}>
 						{
 							_.range(size).map(r =>
-								<Animated.View key={r} style={{ flexDirection: 'row', justifyContent: 'center', height: 80 }}>
+								<View key={r} style={{ flexDirection: 'row', justifyContent: 'center', height: 80 }}>
 									{
 										_.range(size).map(c =>
-											<Animated.View style={{ alignItems: 'center', justifyContent: 'center', margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></Animated.View>
+											<View style={{ alignItems: 'center', justifyContent: 'center', margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
 										)
 									}
-								</Animated.View>
+								</View>
 							)
 						}
-					</Animated.View>
+					</View>
 				</View>
 				<View>
 					<Text style={{ fontSize: 15, color: '#808080' }}>JavaXp.com</Text>
