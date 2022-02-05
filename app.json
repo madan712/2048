@@ -30,7 +30,7 @@
         "backgroundColor": "#F5ECCE"
       },
       "package": "com.javaxp.adfree2048",
-      "versionCode": 1,
+      "versionCode": 6,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.simple2048"
     },
     "web": {
