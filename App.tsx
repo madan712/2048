@@ -292,6 +292,11 @@ export default function App() {
 			}
 		}
 	}
+	
+	const getWidth = (value) => {
+		return value? value.toString().length > 3 ? 32 : 40 : 40
+	}
+	
 
 	return (
 		<GestureRecognizer style={styles.container}
@@ -333,7 +338,7 @@ export default function App() {
 								<View key={r} style={{ flexDirection: 'row', justifyContent: 'center', height: 80 }}>
 									{
 										_.range(size).map(c =>
-											<View style={{ alignItems: 'center', justifyContent: 'center', margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></View>
+											<View style={{ alignItems: 'center', justifyContent: 'center', margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + '' + c} ><Text style={{ fontSize: getWidth(gridData[r][c]), color: '#808080' }}>{gridData[r][c]}</Text></View>
 										)
 									}
 								</View>
