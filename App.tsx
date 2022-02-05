@@ -67,7 +67,7 @@ export default function App() {
 	}, [score, highScore])
 
 	const getColor = (num) => {
-		let color = '#E6E6E6'
+		let color = '#F2F2F2'
 		switch (num) {
 			case 2: color = '#F6CECE'; break;
 			case 4: color = '#F5D0A9'; break;
@@ -80,7 +80,7 @@ export default function App() {
 			case 512: color = '#F6CEF5'; break;
 			case 1024: color = '#CECEF6'; break;
 			case 2048: color = '#CEF6F5'; break;
-			default: color = '#E6E6E6';
+			default: color = '#F2F2F2';
 		}
 		return color
 	}
