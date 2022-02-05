@@ -301,25 +301,30 @@ export default function App() {
 			onSwipeRight={(state) => onSwipeRight(state)}
 		>
 			<View style={{ flex: 1, justifyContent: 'center' }}>
+				<View>
+					<Text style={{ fontSize: 50, color: '#808080' }}>2048</Text>
+				</View>
+
 				<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 40 }}>
-
-					<View style={{ alignSelf: 'flex-start', padding: 0 }}>
-						<TouchableOpacity onPress={() => newGame()}>
-							<Text style={{ padding: 10, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
-								<Text style={{ fontSize: 15, color: '#808080' }}>NEW GAME</Text>
-							</Text>
-						</TouchableOpacity >
+					<View>
+						<View style={{ alignSelf: 'flex-start', padding: 0 }}>
+							<TouchableOpacity onPress={() => newGame()}>
+								<View style={{ padding: 10, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+									<Text style={{ fontSize: 15, color: '#808080' }}>NEW GAME</Text>
+								</View>
+							</TouchableOpacity >
+						</View>
 					</View>
-
-					<View style={{ flexDirection: 'column', alignItems: 'center', paddingHorizontal: 20, paddingTop: 5, marginRight: 20, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
-						<Text style={{ fontSize: 15, color: '#808080' }}>SCORE</Text>
-						<Text style={{ fontSize: 25, color: '#808080' }}>{score}</Text>
+					<View style={{ flexDirection: 'row' }}>
+						<View style={{ flexDirection: 'column', alignItems: 'center', paddingHorizontal: 20, paddingTop: 5, marginRight: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+							<Text style={{ fontSize: 15, color: '#808080' }}>SCORE</Text>
+							<Text style={{ fontSize: 25, color: '#808080' }}>{score}</Text>
+						</View>
+						<View style={{ flexDirection: 'column', alignItems: 'center', padding: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+							<Text style={{ fontSize: 15, color: '#808080' }}>HIGH SCORE</Text>
+							<Text style={{ fontSize: 25, color: '#808080' }}>{highScore}</Text>
+						</View>
 					</View>
-					<View style={{ flexDirection: 'column', alignItems: 'center', padding: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
-						<Text style={{ fontSize: 15, color: '#808080' }}>HIGH SCORE</Text>
-						<Text style={{ fontSize: 25, color: '#808080' }}>{highScore}</Text>
-					</View>
-
 				</View>
 				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
 					<Animated.View style={{ flexDirection: 'column' }}>
@@ -335,6 +340,9 @@ export default function App() {
 							)
 						}
 					</Animated.View>
+				</View>
+				<View>
+					<Text style={{ fontSize: 15, color: '#808080' }}>JavaXp.com</Text>
 				</View>
 			</View>
 		</GestureRecognizer>
