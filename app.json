@@ -2,7 +2,7 @@
   "expo": {
     "name": "2048",
     "slug": "2048",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "2048 game demonstrating react-native-gesture-handler",
     "orientation": "portrait",
     "githubUrl": "https://github.com/madan712/2048",
@@ -22,7 +22,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.javaxp.simple2048",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +30,7 @@
         "backgroundColor": "#F5ECCE"
       },
       "package": "com.javaxp.adfree2048",
-      "versionCode": 6,
+      "versionCode": 7,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.simple2048"
     },
     "web": {
