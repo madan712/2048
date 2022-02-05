@@ -301,13 +301,13 @@ export default function App() {
 			onSwipeRight={(state) => onSwipeRight(state)}
 		>
 			<View style={{ flex: 1, justifyContent: 'center' }}>
-				<View style={{ marginBottom: 40, flexDirection: 'row', justifyContent: 'flex-end' }}>
+				<View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 40 }}>
 
-					<View style={{ alignItems: 'center', flexDirection: 'column', padding: 5, marginRight: 20, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+					<View style={{ flexDirection: 'column', alignItems: 'center', padding: 5, marginRight: 20, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
 						<Text style={{ fontSize: 15, color: '#808080' }}>SCORE</Text>
 						<Text style={{ fontSize: 25, color: '#808080' }}>{score}</Text>
 					</View>
-					<View style={{ alignItems: 'center', flexDirection: 'column', padding: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+					<View style={{ flexDirection: 'column', alignItems: 'center', padding: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
 						<Text style={{ fontSize: 15, color: '#808080' }}>HIGH SCORE</Text>
 						<Text style={{ fontSize: 25, color: '#808080' }}>{highScore}</Text>
 					</View>
@@ -317,10 +317,10 @@ export default function App() {
 					<Animated.View style={{ flexDirection: 'column' }}>
 						{
 							_.range(size).map(r =>
-								<Animated.View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
+								<Animated.View key={r} style={{ flexDirection: 'row', justifyContent: 'center', height: 80 }}>
 									{
 										_.range(size).map(c =>
-											<Animated.View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></Animated.View>
+											<Animated.View style={{ alignItems: 'center', justifyContent: 'center', margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5 }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></Animated.View>
 										)
 									}
 								</Animated.View>
