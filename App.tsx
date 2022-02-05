@@ -1,5 +1,6 @@
 import React from 'react'
-import { Animated, StyleSheet, Text, View } from 'react-native'
+import { Alert, Animated, StyleSheet, Text, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import _ from 'lodash'
 
@@ -16,7 +17,26 @@ export default function App() {
 		return grid
 	}
 
+	const storeHighScore = async (score) => {
+		try {
+			await AsyncStorage.setItem('@highScore', score.toString())
+		} catch (error) {
+			console.log('Error storing high score')
+		}
+	}
+
+	const getHighScore = async () => {
+		try {
+			const val = await AsyncStorage.getItem('@highScore')
+			return val ? parseInt(val) : 0
+		} catch (error) {
+			console.log('Error fetching high score')
+		}
+	}
+
 	const [gridData, setGridData] = React.useState(getBlankData())
+	const [score, setScore] = React.useState(0)
+	const [highScore, setHighScore] = React.useState(0)
 
 	React.useEffect(() => {
 		let c1 = getRandomCell()
@@ -30,8 +50,16 @@ export default function App() {
 		gridData[c1.x][c1.y] = 2
 		gridData[c2.x][c2.y] = 2
 		setGridData(gridData)
-
+		getHighScore().then(v => setHighScore(v))
 	}, [])
+
+	React.useEffect(() => {
+		//Update high score
+		if (score >= highScore) {
+			setHighScore(score)
+		}
+
+	}, [score, highScore])
 
 	const getColor = (num) => {
 		let color = '#ffffff'
@@ -81,6 +109,7 @@ export default function App() {
 							gridData[i][c] = gridData[i + 1][c] * 2
 							gridData[i + 1][c] = undefined
 							isMoved = true
+							setScore(score + gridData[i][c])
 						}
 					}
 					return false
@@ -116,6 +145,7 @@ export default function App() {
 							gridData[i][c] = gridData[i - 1][c] * 2
 							gridData[i - 1][c] = undefined
 							isMoved = true
+							setScore(score + gridData[i][c])
 						}
 					}
 					return false
@@ -151,6 +181,7 @@ export default function App() {
 							gridData[r][i] = gridData[r][i + 1] * 2
 							gridData[r][i + 1] = undefined
 							isMoved = true
+							setScore(score + gridData[r][i])
 						}
 					}
 					return false
@@ -186,6 +217,7 @@ export default function App() {
 							gridData[r][i] = gridData[r][i - 1] * 2
 							gridData[r][i - 1] = undefined
 							isMoved = true
+							setScore(score + gridData[r][i])
 						}
 					}
 					return false
@@ -199,6 +231,10 @@ export default function App() {
 	}
 
 	const update = () => {
+
+
+
+		// Add new cell
 		let emptyCells = []
 		_.range(size).map(r => _.range(size).map(c => {
 			if (!gridData[r][c]) {
@@ -206,8 +242,55 @@ export default function App() {
 			}
 		}))
 		const emptyCell = _.sample(emptyCells)
-		gridData[emptyCell.x][emptyCell.y] = 2
+		gridData[emptyCell.x][emptyCell.y] = _.sample([2, 2, 2, 2, 4])
 		setGridData(_.assign([], gridData))
+
+		//Check if no move space available
+		let allFilled = true
+		_.each(gridData, row => {
+			_.each(row, cell => {
+				if (!cell) {
+					allFilled = false
+					return false
+				}
+			})
+		})
+		if (allFilled) {
+			checkGameOver()
+		}
+
+
+	}
+
+	const checkGameOver = () => {
+		let isOver = true;
+
+		_.each(_.range(size), c => {
+			_.each(_.range(size - 1), r => {
+				if (gridData[r][c] === gridData[r + 1][c]) {
+					isOver = false
+					return false
+				}
+			})
+		})
+
+		_.each(_.range(size), r => {
+			_.each(_.range(size - 1), c => {
+				if (gridData[r][c] === gridData[r][c + 1]) {
+					isOver = false
+					return false
+				}
+			})
+		})
+
+		if (isOver) {
+			if (score >= highScore) {
+				console.log('Game over! High Score:' + score)
+				storeHighScore(score)
+			} else {
+				console.log('Game over! Score:' + score)
+			}
+		}
 	}
 
 	return (
@@ -218,20 +301,32 @@ export default function App() {
 			onSwipeRight={(state) => onSwipeRight(state)}
 		>
 			<View style={{ flex: 1, justifyContent: 'center' }}>
+				<View style={{ marginBottom: 40, flexDirection: 'row', justifyContent: 'flex-end' }}>
+
+					<View style={{ alignItems: 'center', flexDirection: 'column', padding: 5, marginRight: 20, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+						<Text style={{ fontSize: 15, color: '#808080' }}>SCORE</Text>
+						<Text style={{ fontSize: 25, color: '#808080' }}>{score}</Text>
+					</View>
+					<View style={{ alignItems: 'center', flexDirection: 'column', padding: 5, borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, backgroundColor: '#d3d3d3' }}>
+						<Text style={{ fontSize: 15, color: '#808080' }}>HIGH SCORE</Text>
+						<Text style={{ fontSize: 25, color: '#808080' }}>{highScore}</Text>
+					</View>
+
+				</View>
 				<View style={{ backgroundColor: '#d3d3d3', padding: 2, borderRadius: 5, borderWidth: 1, borderColor: '#BDBDBD' }}>
-					<View style={{ flexDirection: 'column' }}>
+					<Animated.View style={{ flexDirection: 'column' }}>
 						{
 							_.range(size).map(r =>
-								<View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
+								<Animated.View key={r} style={{ height: 80, flexDirection: 'row', justifyContent: 'center' }}>
 									{
 										_.range(size).map(c =>
 											<Animated.View style={{ margin: 2, width: 80, backgroundColor: getColor(gridData[r][c]), borderWidth: 1, borderColor: '#BDBDBD', borderRadius: 5, alignItems: 'center', justifyContent: 'center' }} key={r + '' + c} ><Text style={{ fontSize: 40, color: '#808080' }}>{gridData[r][c]}</Text></Animated.View>
 										)
 									}
-								</View>
+								</Animated.View>
 							)
 						}
-					</View>
+					</Animated.View>
 				</View>
 			</View>
 		</GestureRecognizer>
