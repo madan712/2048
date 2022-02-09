@@ -31,7 +31,7 @@
       },
       "package": "com.javaxp.adfree2048",
       "versionCode": 7,
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.simple2048"
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.javaxp.adfree2048"
     },
     "web": {
       "favicon": "./assets/favicon.png"
